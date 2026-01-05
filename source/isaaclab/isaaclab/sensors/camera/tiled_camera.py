@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -9,13 +9,12 @@ import json
 import math
 import numpy as np
 import torch
+import warp as wp
 from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any
 
 import carb
-import warp as wp
 from isaacsim.core.prims import XFormPrim
-from isaacsim.core.version import get_version
 from pxr import UsdGeom
 
 from isaaclab.utils.warp.kernels import reshape_tiled_image
@@ -81,15 +80,8 @@ class TiledCamera(Camera):
 
         Raises:
             RuntimeError: If no camera prim is found at the given path.
-            RuntimeError: If Isaac Sim version < 4.2
             ValueError: If the provided data types are not supported by the camera.
         """
-        isaac_sim_version = float(".".join(get_version()[2:4]))
-        if isaac_sim_version < 4.2:
-            raise RuntimeError(
-                f"TiledCamera is only available from Isaac Sim 4.2.0. Current version is {isaac_sim_version}. Please"
-                " update to Isaac Sim 4.2.0"
-            )
         super().__init__(cfg)
 
     def __del__(self):
